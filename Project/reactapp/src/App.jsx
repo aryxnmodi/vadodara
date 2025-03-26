@@ -1,45 +1,18 @@
-import React, { createContext, useState, useContext } from "react";
-import "./index.css";
+import React, { useState } from "react";
 
-const AppContext = createContext();
-const AppProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+const Counter = () => {
+  const [count, setCount] = useState(0);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
 
   return (
-    <AppContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </AppContext.Provider>
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
   );
 };
 
-AppProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const ThemeToggle = () => {
-  const { theme, toggleTheme } = useContext(AppContext);
-
-  return (
-    <button onClick={toggleTheme}>
-      Switch to {theme === "light" ? "dark" : "light"} mode
-    </button>
-  );
-};
-
-const App = () => {
-  return (
-    <AppProvider>
-      <div className="app-container">
-        <h1>React Context Theme Toggle</h1>
-        <ThemeToggle />
-      </div>
-    </AppProvider>
-  );
-};
-
-export { AppContext, AppProvider };
-export default App;
+export default Counter;
